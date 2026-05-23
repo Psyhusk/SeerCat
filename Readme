@@ -1,0 +1,159 @@
+# SeerCat v5.0 — Crimson Watcher
+## Instalador Imersivo de Auditoria de Redes
+
+```
+ ____  _____ _____ ____   ____    _  _____
+/ ___|| ____| ____|  _ \ / ___|  / \|_   _|
+\___ \|  _| |  _| | |_) | |     / _ \ | |  
+ ___) | |___| |___| _ < | |___ / ___ \| |  
+|____/|_____|_____|_| \_\\____/_/   \_\_|  
+          v5.0 — Feito Por Psyhusk 💻
+```
+
+---
+
+## Pré-requisitos
+
+```bash
+pip install PySide6 pygame reportlab
+```
+
+Para o build em executável único:
+```bash
+pip install pyinstaller Pillow
+```
+
+---
+
+## Executar o Instalador
+
+```bash
+# Com GUI (recomendado)
+python seercat_v5_installer.py
+
+# Modo CLI (fallback automático se PySide6 indisponível)
+python seercat_v5_installer.py
+```
+
+### Áudio (opcional)
+Coloque um arquivo `bad_apple.mp3` no mesmo diretório do script.
+O instalador detectará automaticamente e tocará em loop durante a instalação.
+
+---
+
+## Compilar em Executável (PyInstaller)
+
+```bash
+# Coloque o ícone (26050.jpg) no mesmo diretório
+python build_seercat.py
+```
+
+O executável será gerado em `dist/SeerCat_v5_Installer` (Linux/macOS)
+ou `dist/SeerCat_v5_Installer.exe` (Windows).
+
+---
+
+## O que o instalador faz
+
+### Fase 1 — Ambiente
+- Detecta Python, SO e prepara diretório de destino (`~/seercat_v5/`)
+
+### Fase 2 — Pacotes Python (pip)
+| Pacote | Função |
+|--------|--------|
+| scapy | Motor de Pacotes de Rede |
+| python-nmap | Varredura de Portas |
+| netifaces | Interfaces de Rede |
+| cryptography | Módulo Criptográfico |
+| netaddr | Manipulação de Endereços |
+| paramiko | Protocolo SSH |
+| requests | Requisições HTTP |
+| colorama | Terminal Colorido |
+| tabulate | Formatação de Tabelas |
+| reportlab | Gerador de Relatórios PDF |
+| pygame | Motor de Áudio |
+| psutil | Informações do Sistema |
+| mac-vendor-lookup | Lookup de Fabricantes MAC |
+| manuf | OUI Database |
+| pwncat-cs | Post-Exploitation Engine |
+| impacket | Protocolos de Rede Baixo Nível |
+
+### Fase 3 — Ferramentas do Sistema (apt/brew)
+`nmap`, `aircrack-ng`, `hashcat`, `hcxtools`, `hcxdumptool`,
+`tcpdump`, `masscan`, `nikto`, `wifite`, `john`, `hydra`,
+`ettercap`, `wireshark-cli`
+
+### Fase 4 — Núcleo SeerCat
+Gera o arquivo `seercat_core.py` com:
+- Estrutura de diretórios (`modules/`, `reports/`, `captures/`, etc.)
+- Módulo de auditoria LAN (ARP scan + port scan + OS detection)
+- Módulo WiFi (equivalente ao wifite)
+- Gerador de relatórios PDF técnicos (reportlab)
+
+### Fase 5 — Verificação
+- Confirma arquivos e estrutura
+- Gera **relatório PDF da instalação**
+
+---
+
+## Usar o SeerCat Após Instalação
+
+```bash
+cd ~/seercat_v5
+python seercat_core.py
+```
+
+### Menu do SeerCat Core
+```
+1 — Listar interfaces de rede
+2 — Auditoria completa de rede (LAN)
+3 — Scan de portas (host específico)
+4 — Varredura WiFi
+5 — Gerar relatório PDF
+0 — Sair
+```
+
+### Relatório PDF gerado
+- Localização: `~/seercat_v5/reports/seercat_audit_YYYYMMDD_HHMMSS.pdf`
+- Conteúdo:
+  - Sumário executivo com estatísticas
+  - Tabela de hosts descobertos (IP, MAC, fabricante, OS)
+  - Detalhamento de portas abertas por host (com destaque para portas críticas)
+  - Redes WiFi detectadas
+  - Recomendações de segurança categorizadas (CRÍTICO / ALTO / MÉDIO / BAIXO)
+
+---
+
+## Interface GUI — Detalhes
+
+| Elemento | Descrição |
+|----------|-----------|
+| Janela | Frameless + transparência total (`WA_TranslucentBackground`) |
+| Fundo | Gradiente escuro vermelho sangue |
+| Logo | Gato pixel art com olhos vermelhos brilhantes animados |
+| Pentagrama | Desenhado ao fundo via QPainter |
+| Botões | "Ich akzeptiere den Pakt" / "Nein, bitte nicht." |
+| Log | Terminal em tempo real com cores por nível |
+| Progresso | Barra com gradiente vermelho glowing |
+| Áudio | pygame.mixer — loop Bad Apple sincronizado com ASCII |
+| ASCII art | 5 frames animados sincronizados com posição do áudio |
+
+---
+
+## Aviso Legal
+
+Esta ferramenta destina-se **exclusivamente** a auditorias em redes
+proprietárias com autorização explícita do titular.
+O uso em redes de terceiros sem autorização é crime.
+
+---
+
+### Para executar 
+pip install PySide6 pygame reportlab
+python seercat_v5_installer.py
+
+### para buildar 
+pip install pyinstaller Pillow
+python build_seercat.py
+
+*"Estou observando. Sempre estou observando." — SeerCat v5.0*
