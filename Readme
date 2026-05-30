@@ -1,167 +1,242 @@
-☕ Apoie o Desenvolvimento O SeerCat é um projeto de código aberto, arquitetado e desenvolvido 100% em ambiente mobile. Meu objetivo é criar ferramentas de alta performance que facilitem o fluxo de trabalho de profissionais da área, mesmo com as limitações técnicas do meu setup atual.
+# ☕ CoffeeCat v5.0.1 — CRIMSON WATCHER
+### 🐱‍💻 Linux Rescue Toolkit · Dark Edition · by psyhusk
 
-Se esta ferramenta foi útil para você, considere apoiar o projeto no https://www.patreon.com/cw/Psyhusk/membership Seu apoio é fundamental para que eu possa continuar dedicando tempo integral ao desenvolvimento, à correção de bugs e à implementação de novas funcionalidades.
+---
 
-Todo apoio é muito bem-vindo e me ajuda a manter este ecossistema vivo e em constante evolução.
+## 💜 Apoie o Desenvolvimento
 
+> **O CoffeeCat é um projeto de código aberto, arquitetado e desenvolvido 100% em ambiente mobile.**
+> Meu objetivo é criar ferramentas de alta performance que facilitem o fluxo de trabalho de profissionais da área, mesmo com as limitações técnicas do meu setup atual.
 
+Se esta ferramenta foi útil para você, considere apoiar o projeto:
 
-# SeerCat v5.0 — Crimson Watcher
-## Instalador Imersivo de Auditoria de Redes
+### 👉 [patreon.com/cw/Psyhusk/membership](https://www.patreon.com/cw/Psyhusk/membership)
+
+Seu apoio é fundamental para que eu possa continuar dedicando tempo integral ao desenvolvimento, à correção de bugs e à implementação de novas funcionalidades.
+
+> Todo apoio é muito bem-vindo e me ajuda a manter este ecossistema vivo e em constante evolução. 🙏
+
+---
+
+## 📖 Sobre o Projeto
+
+**CoffeeCat Crimson Watcher** é um toolkit de resgate e diagnóstico Linux com interface gráfica completa, projetado para administradores, técnicos e entusiastas que precisam de uma ferramenta poderosa, automatizada e pronta para uso em situações críticas.
+
+> 🔴 Tudo funciona com **um clique** — a ferramenta faz o trabalho pesado por você.
+
+---
+
+## ✨ Funcionalidades
+
+### 📊 Live Monitor
+- CPU, RAM e I/O de disco em tempo real, atualizado a cada 2 segundos
+- Temperatura dos núcleos com alerta visual quando acima de 85 °C
+- Alerta automático quando RAM ultrapassa 90%
+- Listagem dos processos mais pesados ao vivo
+
+### 🩺 Network Triage — Diagnóstico de Rede
+- Detecção automática de interfaces com status (`ip link`)
+- Teste de conectividade em camadas: Gateway → DNS → Internet
+- Configuração manual de IP/CIDR, Gateway e DNS direto na UI
+- Scan de portas abertas locais via `ss -tulnp`
+- Botões de ação rápida: **Forçar DHCP** e **Resetar NetworkManager**
+
+### 📸 Disk Snapshot & Backup
+- Clonar disco inteiro com progresso em tempo real via `pv`
+- Criar imagem comprimida `.img.gz` com destino configurável
+- Restore de imagem com validação **SHA256** antes e depois
+- Geração e salvamento automático de arquivo `.sha256`
+
+### 🧯 Filesystem Repair
+- `fsck` automatizado com seleção de partição e modo (`-n`, `-y`, `-f`)
+- Suporte a **ext4**, **btrfs** (`btrfs check --repair`) e **xfs** (`xfs_repair`)
+- Detecção automática do tipo de sistema de arquivos
+- Modo **dry-run seguro** para checar sem modificar nada
+
+### 🔐 Secure Wipe — Apagamento Seguro
+- Três métodos: **zeros** (rápido), **`/dev/urandom`** (aleatório), **DoD 5220.22-M** (3 passes)
+- Progresso em tempo real com porcentagem
+- Confirmação **dupla** antes de executar — não tem volta
+- Proteção contra wipe em disco montado
+
+### 🔑 SSH Key Manager — via Chroot
+- Gerar novo par de chaves **ed25519** direto no sistema montado
+- Injetar chave pública no `authorized_keys` de qualquer usuário
+- Reparar permissões (`chmod 700 .ssh` / `chmod 600 authorized_keys`)
+- Tudo executado dentro do chroot, sem precisar bootar o sistema
+
+### 📦 Package Rescue — APT/dpkg via Chroot
+- `apt --fix-broken install` automático
+- Limpeza de locks travados (`/var/lib/dpkg/lock`, `/var/cache/apt`)
+- `dpkg --configure -a` com um clique
+- Reinstalação de qualquer pacote (ex: `linux-image-generic`, `systemd`)
+
+### 🗂 File Browser — Navegador de Emergência
+- Navegar pelo sistema de arquivos da partição montada
+- Visualizar arquivos de texto (logs, configs) inline na UI
+- Copiar arquivos/diretórios para destino seguro
+- Exportar lista de arquivos modificados nas últimas 24h (`find -mtime -1`)
+
+### 🛠 Recovery
+- Reparo de **GRUB** (`grub-install` + `update-grub`) via chroot
+- **Reset de senha** de qualquer usuário via chroot
+- Montagem/desmontagem manual de chroot com bind mounts (`/dev`, `/proc`, `/sys`)
+
+### 💿 USB Installer
+- Gravar ISO local ou baixar de URL direto para o pendrive
+- Progresso em tempo real via `pv`
+- Validação de checksum SHA256 após gravação
+- Proteção contra gravação em disco montado
+
+### 🔬 Hardware
+- Informações completas de CPU, RAM e discos
+- Status **SMART** com setores realocados, horas de uso e temperatura
+- Detecção automática de todos os discos e partições
+
+---
+
+## 🗂 Estrutura de Arquivos
 
 ```
- ____  _____ _____ ____   ____    _  _____
-/ ___|| ____| ____|  _ \ / ___|  / \|_   _|
-\___ \|  _| |  _| | |_) | |     / _ \ | |  
- ___) | |___| |___| _ < | |___ / ___ \| |  
-|____/|_____|_____|_| \_\\____/_/   \_\_|  
-          v5.0 — Feito Por Psyhusk 💻
+coffeecat/
+├── coffeecat.py              # 🔧 Toolkit principal (rode com sudo)
+├── coffeecat_installer.py    # 🎨 Instalador gráfico (janela Crimson)
+├── build_coffeecat.py        # 🏗  Script de build (PyInstaller)
+└── README.md                 # 📖 Este arquivo
 ```
 
 ---
 
-## Pré-requisitos
+## 🚀 Como Usar
+
+### ▶ Execução direta (sem instalar)
 
 ```bash
-pip install PySide6 pygame reportlab
+# Instalar dependências Python
+pip install customtkinter psutil
+
+# Rodar o toolkit (root necessário para operações de disco)
+sudo python3 coffeecat.py
 ```
 
-Para o build em executável único:
-```bash
-pip install pyinstaller Pillow
-```
-
----
-
-## Executar o Instalador
+### 📦 Instalação via instalador gráfico
 
 ```bash
-# Com GUI (recomendado)
-python seercat_v5_installer.py
-
-# Modo CLI (fallback automático se PySide6 indisponível)
-python seercat_v5_installer.py
+python3 coffeecat_installer.py
 ```
 
-### Áudio (opcional)
-Coloque um arquivo `bad_apple.mp3` no mesmo diretório do script.
-O instalador detectará automaticamente e tocará em loop durante a instalação.
+O instalador irá:
+1. Instalar as dependências Python automaticamente
+2. Copiar os arquivos para `~/.local/share/coffeecat/`
+3. Criar atalho em `~/.local/bin/coffeecat`
+4. Criar entrada `.desktop` para o menu de aplicativos
 
----
-
-## Compilar em Executável (PyInstaller)
+### 🏗 Build de executável standalone
 
 ```bash
-# Coloque o ícone (26050.jpg) no mesmo diretório
-python build_seercat.py
+# Instalar PyInstaller e dependências
+pip install pyinstaller customtkinter psutil Pillow
+
+# Buildar
+python3 build_coffeecat.py
+
+# Resultado em:
+# dist/CoffeeCat_v501_CrimsonWatcher        (Linux/macOS)
+# dist/CoffeeCat_v501_CrimsonWatcher.exe    (Windows)
 ```
 
-O executável será gerado em `dist/SeerCat_v5_Installer` (Linux/macOS)
-ou `dist/SeerCat_v5_Installer.exe` (Windows).
-
 ---
 
-## O que o instalador faz
+## ⚙️ Dependências
 
-### Fase 1 — Ambiente
-- Detecta Python, SO e prepara diretório de destino (`~/seercat_v5/`)
+### Python (instaladas automaticamente)
+| Pacote | Uso |
+|--------|-----|
+| `customtkinter` | Interface gráfica moderna |
+| `psutil` | Métricas de CPU, RAM e disco |
+| `Pillow` | Conversão de ícone (apenas build) |
 
-### Fase 2 — Pacotes Python (pip)
-| Pacote | Função |
-|--------|--------|
-| scapy | Motor de Pacotes de Rede |
-| python-nmap | Varredura de Portas |
-| netifaces | Interfaces de Rede |
-| cryptography | Módulo Criptográfico |
-| netaddr | Manipulação de Endereços |
-| paramiko | Protocolo SSH |
-| requests | Requisições HTTP |
-| colorama | Terminal Colorido |
-| tabulate | Formatação de Tabelas |
-| reportlab | Gerador de Relatórios PDF |
-| pygame | Motor de Áudio |
-| psutil | Informações do Sistema |
-| mac-vendor-lookup | Lookup de Fabricantes MAC |
-| manuf | OUI Database |
-| pwncat-cs | Post-Exploitation Engine |
-| impacket | Protocolos de Rede Baixo Nível |
-
-### Fase 3 — Ferramentas do Sistema (apt/brew)
-`nmap`, `aircrack-ng`, `hashcat`, `hcxtools`, `hcxdumptool`,
-`tcpdump`, `masscan`, `nikto`, `wifite`, `john`, `hydra`,
-`ettercap`, `wireshark-cli`
-
-### Fase 4 — Núcleo SeerCat
-Gera o arquivo `seercat_core.py` com:
-- Estrutura de diretórios (`modules/`, `reports/`, `captures/`, etc.)
-- Módulo de auditoria LAN (ARP scan + port scan + OS detection)
-- Módulo WiFi (equivalente ao wifite)
-- Gerador de relatórios PDF técnicos (reportlab)
-
-### Fase 5 — Verificação
-- Confirma arquivos e estrutura
-- Gera **relatório PDF da instalação**
-
----
-
-## Usar o SeerCat Após Instalação
-
+### Ferramentas do sistema (recomendadas)
 ```bash
-cd ~/seercat_v5
-python seercat_core.py
+sudo apt install smartmontools grub2-common pv wget \
+                 util-linux iproute2 btrfs-progs xfsprogs
 ```
 
-### Menu do SeerCat Core
-```
-1 — Listar interfaces de rede
-2 — Auditoria completa de rede (LAN)
-3 — Scan de portas (host específico)
-4 — Varredura WiFi
-5 — Gerar relatório PDF
-0 — Sair
-```
-
-### Relatório PDF gerado
-- Localização: `~/seercat_v5/reports/seercat_audit_YYYYMMDD_HHMMSS.pdf`
-- Conteúdo:
-  - Sumário executivo com estatísticas
-  - Tabela de hosts descobertos (IP, MAC, fabricante, OS)
-  - Detalhamento de portas abertas por host (com destaque para portas críticas)
-  - Redes WiFi detectadas
-  - Recomendações de segurança categorizadas (CRÍTICO / ALTO / MÉDIO / BAIXO)
+| Ferramenta | Função |
+|------------|--------|
+| `smartctl` | Diagnóstico SMART de discos |
+| `pv` | Progresso em tempo real para dd |
+| `grub-install` | Reparo do bootloader |
+| `fsck` | Verificação de sistema de arquivos |
+| `btrfs` | Reparo de volumes btrfs |
+| `xfs_repair` | Reparo de volumes XFS |
+| `ss` | Scan de portas abertas |
+| `ip` / `nmcli` | Gestão de interfaces de rede |
 
 ---
 
-## Interface GUI — Detalhes
+## 🖥 Requisitos do Sistema
 
-| Elemento | Descrição |
-|----------|-----------|
-| Janela | Frameless + transparência total (`WA_TranslucentBackground`) |
-| Fundo | Gradiente escuro vermelho sangue |
-| Logo | Gato pixel art com olhos vermelhos brilhantes animados |
-| Pentagrama | Desenhado ao fundo via QPainter |
-| Botões | "Ich akzeptiere den Pakt" / "Nein, bitte nicht." |
-| Log | Terminal em tempo real com cores por nível |
-| Progresso | Barra com gradiente vermelho glowing |
-| Áudio | pygame.mixer — loop Bad Apple sincronizado com ASCII |
-| ASCII art | 5 frames animados sincronizados com posição do áudio |
+| Item | Mínimo |
+|------|--------|
+| Python | 3.8+ |
+| SO | Linux (Ubuntu 20.04+, Debian 11+, Arch, Fedora) |
+| Permissões | `sudo` / root para operações de disco |
+| tkinter | Incluído no Python padrão |
+
+> ⚠️ **Operações de disco, chroot e wipe exigem root.**
+> Execute `sudo python3 coffeecat.py` para acesso completo.
 
 ---
 
-## Aviso Legal
+## 🎨 Interface — Crimson Watcher
 
-Esta ferramenta destina-se **exclusivamente** a auditorias em redes
-proprietárias com autorização explícita do titular.
-O uso em redes de terceiros sem autorização é crime.
+- 🔴 Tema escuro com paleta **Crimson** (`#cc1a1a`)
+- 🪟 Janela do instalador **frameless**, transparente, com **red glow** animado
+- 🐱 Arte de gato com **olhos vermelhos** e **pentagrama** no instalador
+- 📟 Terminal de log integrado em todas as abas
+- 💬 Comentários sádicos e de síndrome de deus em tempo real no log durante as operações
 
 ---
 
-### Para executar 
-pip install PySide6 pygame reportlab
-python seercat_v5_installer.py
+## ⚠️ Avisos Importantes
 
-### para buildar 
-pip install pyinstaller Pillow
-python build_seercat.py
+> 🔴 **WIPE e CLONE são irreversíveis.** O CoffeeCat exige confirmação dupla, mas não há desfazer após a execução.
 
-*"Estou observando. Sempre estou observando." — SeerCat v5.0*
+> 🔴 **Sempre confirme o dispositivo de destino** antes de gravar ISO ou executar wipe.
+
+> 🟡 **Teste em ambiente controlado** antes de usar em produção.
+
+---
+
+## 📜 Licença
+
+Distribuído como **código aberto**. Use, modifique e distribua à vontade.
+Créditos ao autor original são apreciados. ☕
+
+---
+
+## 👤 Autor
+
+**psyhusk** — desenvolvido 100% em ambiente mobile.
+
+💜 [Apoie no Patreon](https://www.patreon.com/cw/Psyhusk/membership) · ajude a manter o projeto vivo.
+
+---
+
+<div align="center">
+
+```
+  ██████╗ ██████╗ ███████╗███████╗███████╗███████╗ ██████╗ █████╗ ████████╗
+ ██╔════╝██╔═══██╗██╔════╝██╔════╝██╔════╝██╔════╝██╔════╝██╔══██╗╚══██╔══╝
+ ██║     ██║   ██║█████╗  █████╗  █████╗  █████╗  ██║     ███████║   ██║   
+ ██║     ██║   ██║██╔══╝  ██╔══╝  ██╔══╝  ██╔══╝  ██║     ██╔══██║   ██║   
+ ╚██████╗╚██████╔╝██║     ██║     ███████╗███████╗╚██████╗██║  ██║   ██║   
+  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝     ╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝   ╚═╝   
+```
+
+**☕ CoffeeCat v5.0.1 · Crimson Watcher · by psyhusk**
+
+*"Consertando o que mentes mortais quebraram. De nada, universo."*
+
+</div>
